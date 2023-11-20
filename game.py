@@ -1,44 +1,40 @@
 import pygame
-from settings import *
 import sys
 
-
-
-screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
-wall = pygame.image.load("assets/images/wall0.png").convert()
-floor = pygame.image.load("assets/images/floor.png").convert()
-
-background = screen.copy()
+pygame.init()
 clock = pygame.time.Clock()
+
+screen_width = 900
+screen_height = 560
+tile_size = 64
+screen = pygame.display.set_mode((screen_width, screen_height))
+pygame.display.set_caption('FOOSEBALL')
+background_image = pygame.image.load("assets/images/field.png")
+wall = pygame.image.load("assets/images/border.png").convert()
+background = screen.copy()
+
+
+
 def drawbackground():
-    #bottom
-    for i in range (SCREEN_WIDTH // TILE_SIZE):
-        background.blit(wall,(TILE_SIZE *i,SCREEN_HEIGHT-16 ))
-    #left side
-for i in range (SCREEN_HEIGHT// TILE_SIZE):
-    background.blit(wall, (0, TILE_SIZE * i))
-    #right side
-for i in range (SCREEN_HEIGHT //TILE_SIZE):
-    background.blit(wall, (SCREEN_WIDTH-16, TILE_SIZE* i))
-    # ceiling
-    for i in range(SCREEN_WIDTH // TILE_SIZE):
-        background.blit(wall, (TILE_SIZE * i, 0))
-    #floor
-[background.blit(floor, (SCREEN_WIDTH - (x * TILE_SIZE), (TILE_SIZE * i + (2 * TILE_SIZE)))) for x in range(SCREEN_WIDTH-2*TILE_SIZE)) for i
- in range(SCREEN_WIDTH // TILE_SIZE)]
 
+    for i in range(screen_width // tile_size):
+        background.blit(wall, (tile_size * i, screen_height - tile_size))
+        background.blit(wall, (tile_size * i, 0))
 
+    for i in range(screen_height // tile_size):
+        background.blit(wall, (0, tile_size * i))
+        background.blit(wall, (screen_width - tile_size, tile_size * i))
 
-drawbackground()
-screen.blit(background, (0, 0))
-pygame.display.flip()
-clock.tick(60)
 
 while True:
-    # listen for events
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
+
+
+
+    pygame.display.flip()
+    clock.tick(60)
 
 
