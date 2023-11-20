@@ -1,9 +1,5 @@
 import pygame
 import sys
-import random
-
-pygame.init()
-clock = pygame.time.Clock()
 
 screen_width = 960
 screen_height = 576
@@ -44,8 +40,9 @@ rightbottomgoalpost = pygame.image.load("assets/images/element (54).png")
 rightfrontgoalpost = pygame.image.load("assets/images/element (53).png")
 frontgoalpost = pygame.image.load("assets/images/element (44).png")
 backgoalpost = pygame.image.load("assets/images/element (45).png")
+righttoppost = pygame.image.load("assets/images/element (36).png")
+lefttoppost = pygame.image.load("assets/images/element (35).png")
 screen = pygame.display.set_mode((screen_width, screen_height))
-pygame.display.set_caption('FOOSEBALL')
 background = screen.copy()
 
 def drawbackground():
@@ -208,29 +205,12 @@ for i in range(screen_width):
     background.blit(bottomleftgoalpost, (tile_size-16,5*tile_size))
     background.blit(bottomrightgoalpost, (2*tile_size-16, 5*tile_size))
     #right goal
-    for i in range (screen_width):
-    #background.blit()
-    #background.blit()
-        background.blit(backgoalpost, (13*tile_size+16git, 4*tile_size))
+for i in range (screen_width):
+    background.blit(righttoppost, (13*tile_size+16, 3*tile_size))
+    background.blit(lefttoppost, (12*tile_size+16, 3*tile_size))
+    background.blit(backgoalpost, (13*tile_size+16, 4*tile_size))
     background.blit(frontgoalpost, (12*tile_size+16, 4*tile_size))
     background.blit(rightfrontgoalpost, (12*tile_size+16, 5*tile_size))
     background.blit(rightbottomgoalpost, (13*tile_size+16, 5*tile_size))
 
 
-
-
-#rows of red players
-
-#rows of blue players
-
-
-drawbackground()
-screen.blit(background, (0, 0))
-pygame.display.flip()
-clock.tick(60)
-
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
