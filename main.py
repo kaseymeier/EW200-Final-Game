@@ -2,6 +2,7 @@ import pygame
 import sys
 from background import *
 import random
+import pygame.key
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -11,23 +12,30 @@ screen.blit(background, (0, 0))
 
 class BlueTeam(pygame.sprite.Sprite):
     def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
         super().__init__()
         self.image = pygame.image.load("assets/images/characterBlue (5).png")
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-        self.speed = 5
 
     def update(self):
-        pass
+        self.dy = 0
+
+        keystate = pygame.key.get_pressed()
+        if keystate[pygame.K_w]:
+            self.dy = -3
+        if keystate[pygame.K_s]:
+            self.dy = 3
+        self.rect.y += self.dy
 
 
-# Create a sprite group
+
 blue_sprites = pygame.sprite.Group()
 
 # Create a row of sprites
 for i in range(1):
-    goalie = BlueTeam(tile_size * 2 + 20, 4 * tile_size + 16)
+    goalie = BlueTeam((tile_size * 2 + 20), (4 * tile_size + 16))
     blue_sprites.add(goalie)
 
 dspacing = tile_size
@@ -45,16 +53,9 @@ for i in range(3):
     striker = BlueTeam(9.5 * tile_size + 30, i * topspacing + 3 * tile_size)
     blue_sprites.add(striker)
 
-keys = pygame.key.get_pressed()
-for players in blue_sprites:
-    if keys[pygame.K_w]:
-        players.rect.y -= players.speed
-    if keys[pygame.K_s]:
-        players.rect.y += players.speed
 
 blue_sprites.update()
-
-
+blue_sprites.draw(screen)
 
 class RedTeam(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -86,12 +87,33 @@ for i in range(3):
 
 red_sprites.update()
 red_sprites.draw(screen)
-blue_sprites.draw(screen)
 
-# rows of red players
+class Ball(pygame.sprite.Sprite):
+    def __init__(self, x, y):
+        pygame.sprite.Sprite.__init__(self)
+        self.image = pygame.image.load("assets/images/ball_soccer2.png")
+        self.rect = self.image.get_rect()
+        self.rect.x = x
+        self.rect.y = y
 
-# rows of blue players
+# Create an instance of the Ball class
+soccer_ball = Ball(screen_width,screen_height)
 
+# Create a sprite group and add the ball to it
+ball_sprite = pygame.sprite.Group()
+ball_sprite.add(soccer_ball)
+
+# Now, you can update and draw the sprite group
+ball_sprite.update()
+ball_sprite.draw(screen)
+
+all_sprites = pygame.sprite.Group()
+
+
+redteam = RedTeam(screen_width, screen_height)
+blueteam = BlueTeam(screen_width, screen_height)
+ball = Ball(10,10)
+all_sprites.add(redteam, blueteam, ball)
 
 pygame.display.flip()
 clock.tick(60)
@@ -101,18 +123,4 @@ while True:
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-        elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_w:
-                for player in blue_sprites:
-                    player.is_moving_up = True
-            elif event.key == pygame.K_s:
-                for player in blue_sprites:
-                    player.is_moving_down = True
-        elif event.type == pygame.KEYUP:
-            if event.key == pygame.K_w:
-                for player in blue_sprites:
-                    player.is_moving_up = False
-            elif event.key == pygame.K_s:
-                for player in blue_sprites:
-                    player.is_moving_down = False
 
