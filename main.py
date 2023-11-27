@@ -3,6 +3,8 @@ import sys
 from background import *
 import random
 import pygame.key
+white = (255, 255, 255)
+
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -18,18 +20,14 @@ class BlueTeam(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-
     def update(self):
         self.dy = 0
-
         keystate = pygame.key.get_pressed()
         if keystate[pygame.K_w]:
             self.dy = -3
         if keystate[pygame.K_s]:
             self.dy = 3
         self.rect.y += self.dy
-
-
 
 blue_sprites = pygame.sprite.Group()
 
@@ -56,6 +54,7 @@ for i in range(3):
 
 blue_sprites.update()
 blue_sprites.draw(screen)
+
 
 class RedTeam(pygame.sprite.Sprite):
     def __init__(self, x, y):
@@ -96,6 +95,10 @@ class Ball(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
+
+
+
+
 # Create an instance of the Ball class
 soccer_ball = Ball(screen_width,screen_height)
 
@@ -112,15 +115,24 @@ all_sprites = pygame.sprite.Group()
 
 redteam = RedTeam(screen_width, screen_height)
 blueteam = BlueTeam(screen_width, screen_height)
-ball = Ball(10,10)
+ball = Ball(screen_width,screen_height)
 all_sprites.add(redteam, blueteam, ball)
+red_score = 0
+blue_score = 0
+game_font = pygame.font.Font("Oswald-Bold.ttf", 32)
+
+
 
 pygame.display.flip()
 clock.tick(60)
-
+previous_time = clock.get_time()
+fps = clock.get_fps()
+print(previous_time)
+print(fps)
+game_clock = (game_font.render(f"{previous_time}", False, white))
+screen.blit(game_clock, (6*tile_size, tile_size))
 while True:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
             sys.exit()
-

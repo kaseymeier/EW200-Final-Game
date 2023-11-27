@@ -1,6 +1,7 @@
 import pygame.key
-
-
+white = (255, 255, 255)
+from background import tile_size
+from background import screen
 class BlueTeam(pygame.sprite.Sprite):
     def __init__(self):
         pygame.sprite.Sprite.__init__(self)
@@ -70,3 +71,11 @@ class Ball(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
+
+red_score = 0
+blue_score = 0
+game_font = pygame.font.Font("freesans.ttf", 32)
+
+red_text = game_font.render(f"{red_score}", False, white)
+screen.blit(red_text, ((4*tile_size, tile_size)))
+
