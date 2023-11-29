@@ -1,9 +1,10 @@
 import pygame
 import sys
 from background import *
-import random
+
 import pygame.key
 white = (255, 255, 255)
+from player import *
 
 
 pygame.init()
@@ -95,20 +96,12 @@ class Ball(pygame.sprite.Sprite):
         self.rect.x = x
         self.rect.y = y
 
-
-
-
-
-# Create an instance of the Ball class
 soccer_ball = Ball(screen_width,screen_height)
-
-# Create a sprite group and add the ball to it
 ball_sprite = pygame.sprite.Group()
 ball_sprite.add(soccer_ball)
-
-# Now, you can update and draw the sprite group
 ball_sprite.update()
 ball_sprite.draw(screen)
+
 
 all_sprites = pygame.sprite.Group()
 

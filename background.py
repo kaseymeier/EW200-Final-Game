@@ -42,15 +42,7 @@ frontgoalpost = pygame.image.load("assets/images/element (44).png")
 backgoalpost = pygame.image.load("assets/images/element (45).png")
 righttoppost = pygame.image.load("assets/images/element (36).png")
 lefttoppost = pygame.image.load("assets/images/element (35).png")
-gray = (137, 164, 166)
-rect1 = pygame.Rect(tile_size*2+28, 0, 7, 9*tile_size)
-rect2 = pygame.Rect(tile_size*3+45, 0, 7, 9*tile_size)
-rect3 = pygame.Rect(tile_size*5-8, 0, 7, 9*tile_size)
-rect4 = pygame.Rect(tile_size*6+23, 0, 7, 9*tile_size)
-rect5 = pygame.Rect(tile_size*9-25, 0, 7, 9*tile_size)
-rect6 = pygame.Rect(tile_size*10+5, 0, 7, 9*tile_size)
-rect7 = pygame.Rect(tile_size*11+16, 0, 7, 9*tile_size)
-rect8 = pygame.Rect(tile_size*12+28, 0, 7, 9*tile_size)
+
 screen = pygame.display.set_mode((screen_width, screen_height))
 background = screen.copy()
 
@@ -205,30 +197,8 @@ for i in range(screen_width):
     background.blit(bottomsideline, (10 * tile_size, 7 * tile_size))
     background.blit(bottomsideline, (11 * tile_size, 7 * tile_size))
     background.blit(bottomsideline, (12 * tile_size, 7 * tile_size))
-for i in range(screen_width):
-    #left goal
-    background.blit(topleftgoalpost, (tile_size-16,3*tile_size))
-    background.blit(toprightgoalpost, (2*tile_size-16, 3*tile_size))
-    background.blit(backgoal, (tile_size-16, 4*tile_size))
-    background.blit(frontgoal, (2*tile_size-16, 4*tile_size))
-    background.blit(bottomleftgoalpost, (tile_size-16,5*tile_size))
-    background.blit(bottomrightgoalpost, (2*tile_size-16, 5*tile_size))
-    #right goal
-for i in range (screen_width):
-    background.blit(righttoppost, (13*tile_size+16, 3*tile_size))
-    background.blit(lefttoppost, (12*tile_size+16, 3*tile_size))
-    background.blit(backgoalpost, (13*tile_size+16, 4*tile_size))
-    background.blit(frontgoalpost, (12*tile_size+16, 4*tile_size))
-    background.blit(rightfrontgoalpost, (12*tile_size+16, 5*tile_size))
-    background.blit(rightbottomgoalpost, (13*tile_size+16, 5*tile_size))
-for i in range(screen_width):
-    pygame.draw.rect(background, gray, rect1)
-    pygame.draw.rect(background, gray, rect2)
-    pygame.draw.rect(background, gray, rect3)
-    pygame.draw.rect(background, gray, rect4)
-    pygame.draw.rect(background, gray, rect5)
-    pygame.draw.rect(background, gray, rect6)
-    pygame.draw.rect(background, gray, rect7)
-    pygame.draw.rect(background, gray, rect8)
+
+
+
 
 

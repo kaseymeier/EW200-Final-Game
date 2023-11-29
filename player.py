@@ -1,4 +1,5 @@
 import pygame
+from background import screen
 class Player(pygame.sprite.Sprite):
     def __init__(self, team, x, y):
         pygame.sprite.Sprite.__init__(self)
@@ -10,4 +11,8 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect()
         self.rect.centery = y
         self.rect.centerx = x
+
+player_sprites = pygame.sprite.Group()
+player_sprites.add()
+player_sprites.draw(screen)
 
