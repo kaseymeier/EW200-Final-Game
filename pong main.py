@@ -9,10 +9,15 @@ clock = pygame.time.Clock()
 drawbackground()
 gray = (200, 200, 200)
 
+scaling_factor = 1.25
+ball = pygame.Rect(screen_width/2-15, screen_height/2-15, 2, 2)
+ball1_image =  pygame.image.load("assets/images/ball_soccer2.png").convert_alpha()
+ball_image =  pygame.transform.scale(ball1_image, (ball1_image.get_width() * scaling_factor, ball1_image.get_height() * scaling_factor))
 
-ball = pygame.Rect(screen_width/2-15, screen_height/2-15, 30, 30)
 blueplayer = pygame.Rect(13*tile_size-10, screen_height/2-70,10,140)
+blue_image = pygame.image.load("assets/images/characterBlue (5).png")
 redplayer = pygame.Rect(2*tile_size, screen_height/2-70, 10 ,140)
+red_image = pygame.image.load("assets/images/characterRed (5).png")
 
 
 ball_speed_x = 7 * random.choice((1,-1))
@@ -27,6 +32,8 @@ game_font = pygame.font.Font("Oswald-Bold.ttf", 64)
 score_time = None
 
 
+
+
 def ball_restart():
     global ball_speed_x, ball_speed_y, blueplayer_score, redplayer_score, score_time
 
@@ -39,8 +46,35 @@ def ball_restart():
     # else:
     ball_speed_y = 7* random.choice((1,-1))
     ball_speed_x = 7* random.choice((1,-1))
-    time.sleep(.1)
-        #score_time = None
+    time.sleep(1)
+
+class Redbench(pygame.sprite.Sprite):
+    def __init__(self):
+        super().__init__()
+        self.image = pygame.image.load("assets/images/characterRed (3).png")
+        self.rect = self.image.get_rect()
+        self.rect.x = random.randint(-1, 6*tile_size - self.rect.width)
+        self.rect.y = random.randint(0, tile_size - self.rect.height)
+        self.dx = random.choice([1, 1])  # Random direction along the x-axis
+        self.dy = random.choice([1, 1])  # Random direction along the y-axis
+
+    def update(self):
+        # Move the sprite
+        self.rect.x += self.dx
+        self.rect.y += self.dy
+
+        # Bounce off the walls
+        if self.rect.left < tile_size or self.rect.right >  2*tile_size:
+            self.dx = -self.dx
+        if self.rect.top < 0 or self.rect.bottom > tile_size:
+            self.dy = -self.dy
+
+all_sprites = pygame.sprite.Group()
+
+# Create random sprites
+for _ in range(6):
+    red = Redbench()
+    all_sprites.add(red)
 
 while True:
     for event in pygame.event.get():
@@ -101,10 +135,16 @@ while True:
     if ball.colliderect(blueplayer) or ball.colliderect(redplayer):
         ball_speed_x *= -1
 
+
     screen.blit(background, (0, 0))
     pygame.draw.ellipse(screen, gray, ball)
+    screen.blit(ball_image, ball)
     pygame.draw.rect(screen, gray, blueplayer)
+    screen.blit(blue_image, blueplayer)
     pygame.draw.rect(screen, gray, redplayer)
+    all_sprites.update()
+    all_sprites.draw(screen)
+    screen.blit(red_image, redplayer)
 
 
     blueplayer_text = game_font.render(f"{redplayer_score}", False, gray)
@@ -117,3 +157,10 @@ while True:
 
     pygame.display.flip()
     clock.tick(60)
+
+
+
+# if red > blueplayer
+#     draw blue winsound
+#
+
