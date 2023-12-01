@@ -22,7 +22,7 @@ class Bluebench(pygame.sprite.Sprite):
         # Bounce off the walls
         if self.rect.left < 8*tile_size or self.rect.right >  13*tile_size:
             self.dx = -self.dx
-        if self.rect.top < 9*tile_size or self.rect.bottom > 8* tile_size:
+        if self.rect.top < 8*tile_size or self.rect.bottom > 9* tile_size:
             self.dy = -self.dy
 
 all_sprites = pygame.sprite.Group()

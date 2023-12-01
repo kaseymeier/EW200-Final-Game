@@ -3,6 +3,7 @@ import sys
 import random
 import time
 from background import *
+import bluewin
 
 pygame.init()
 clock = pygame.time.Clock()
@@ -14,14 +15,14 @@ ball = pygame.Rect(screen_width/2-15, screen_height/2-15, 2, 2)
 ball1_image =  pygame.image.load("assets/images/ball_soccer2.png").convert_alpha()
 ball_image =  pygame.transform.scale(ball1_image, (ball1_image.get_width() * scaling_factor, ball1_image.get_height() * scaling_factor))
 
-blueplayer = pygame.Rect(13*tile_size-10, screen_height/2-70,10,140)
+blueplayer = pygame.Rect(13*tile_size-10, screen_height/2-16,12,150)
 blue_image = pygame.image.load("assets/images/characterBlue (5).png")
-redplayer = pygame.Rect(2*tile_size, screen_height/2-70, 10 ,140)
+redplayer = pygame.Rect(2*tile_size, screen_height/2-16, 2 ,30)
 red_image = pygame.image.load("assets/images/characterRed (5).png")
 
 
-ball_speed_x = 7 * random.choice((1,-1))
-ball_speed_y = 7 * random.choice((1,-1))
+ball_speed_x = 2 * random.choice((1,-1))
+ball_speed_y = 2 * random.choice((1,-1))
 blueplayer_speed = 0
 redplayer_speed = 0
 
@@ -44,8 +45,8 @@ def ball_restart():
     #     ball_speed_x = 0
     #     ball_speed_y = 0
     # else:
-    ball_speed_y = 7* random.choice((1,-1))
-    ball_speed_x = 7* random.choice((1,-1))
+    ball_speed_y = 5* random.choice((1,-1))
+    ball_speed_x = 5* random.choice((1,-1))
     time.sleep(1)
 
 class Redbench(pygame.sprite.Sprite):
@@ -53,7 +54,7 @@ class Redbench(pygame.sprite.Sprite):
         super().__init__()
         self.image = pygame.image.load("assets/images/characterRed (3).png")
         self.rect = self.image.get_rect()
-        self.rect.x = random.randint(-1, 6*tile_size - self.rect.width)
+        self.rect.x = random.randint(2, 6*tile_size - self.rect.width)
         self.rect.y = random.randint(0, tile_size - self.rect.height)
         self.dx = random.choice([1, 1])  # Random direction along the x-axis
         self.dy = random.choice([1, 1])  # Random direction along the y-axis
@@ -72,11 +73,11 @@ class Redbench(pygame.sprite.Sprite):
 all_sprites = pygame.sprite.Group()
 
 # Create random sprites
-for _ in range(6):
+for _ in range(4):
     red = Redbench()
     all_sprites.add(red)
 
-while True:
+while redplayer_score < 5 and blueplayer_score < 2:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
             pygame.quit()
@@ -135,6 +136,8 @@ while True:
     if ball.colliderect(blueplayer) or ball.colliderect(redplayer):
         ball_speed_x *= -1
 
+   
+
 
     screen.blit(background, (0, 0))
     pygame.draw.ellipse(screen, gray, ball)
@@ -158,9 +161,16 @@ while True:
     pygame.display.flip()
     clock.tick(60)
 
+if redplayer_score > blueplayer_score:
+    screen.fill((255,0,0))
+else:
+    screen.blit(bluewin)
+pygame.display.flip()
 
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()
+            sys.exit()
 
-# if red > blueplayer
-#     draw blue winsound
-#
 
