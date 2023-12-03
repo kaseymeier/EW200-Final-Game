@@ -163,9 +163,9 @@ while redplayer_score < 5 and blueplayer_score < 5:
                 blueplayer_speed += 7
             if event.key == pygame.K_UP:
                 blueplayer_speed -= 7
-            if event.key == pygame.K_LEFT:
+            if event.key == pygame.K_w:
                 redplayer_speed += 7
-            if event.key == pygame.K_RIGHT:
+            if event.key == pygame.K_s:
                 redplayer_speed -= 7
 
         if event.type == pygame.KEYUP:
