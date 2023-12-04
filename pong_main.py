@@ -1,6 +1,7 @@
 import random
 import time
 from background import *
+pygame.display.set_caption("Soccer Pong")
 
 pygame.init()
 pygame.mixer.init()
