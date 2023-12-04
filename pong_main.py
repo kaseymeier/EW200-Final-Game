@@ -158,25 +158,27 @@ while redplayer_score < 5 and blueplayer_score < 5:
             pygame.quit()
             sys.exit()
 
+# Help from Joshua Reid
+
         if event.type == pygame.KEYDOWN:
             if event.key == pygame.K_DOWN:
-                blueplayer_speed += 7
+                blueplayer_speed += 10
             if event.key == pygame.K_UP:
-                blueplayer_speed -= 7
+                blueplayer_speed -= 10
             if event.key == pygame.K_w:
-                redplayer_speed += 7
+                redplayer_speed -= 10
             if event.key == pygame.K_s:
-                redplayer_speed -= 7
+                redplayer_speed += 10
 
         if event.type == pygame.KEYUP:
             if event.key == pygame.K_DOWN:
-                blueplayer_speed -= 7
+                blueplayer_speed -= 10
             if event.key == pygame.K_UP:
-                blueplayer_speed += 7
+                blueplayer_speed += 10
             if event.key == pygame.K_w:
-                redplayer_speed -= 7
+                redplayer_speed += 10
             if event.key == pygame.K_s:
-                redplayer_speed += 7
+                redplayer_speed -= 10
 
     blue_wins = False
     red_wins = False
@@ -184,6 +186,7 @@ while redplayer_score < 5 and blueplayer_score < 5:
     ball.x += ball_speed_x
     ball.y += ball_speed_y
     blueplayer.y += blueplayer_speed
+    redplayer.y += redplayer_speed
     if blueplayer_score >= 5:
         screen.fill(lightblue)  # Change the background color for blue wins
         background_sound.stop()
