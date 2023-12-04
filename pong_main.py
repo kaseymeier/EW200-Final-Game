@@ -1,8 +1,5 @@
 import random
 import time
-
-import pygame
-
 from background import *
 
 pygame.init()
@@ -85,7 +82,7 @@ def ball_restart():
     ball_speed_x = 5 * random.choice((1, -1))
     time.sleep(1)
 
-
+# random bench team sprites
 class Redbench(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
@@ -129,6 +126,7 @@ class Bluebench(pygame.sprite.Sprite):
         self.dx = random.choice([1, 1])  # Random direction along the x-axis
         self.dy = random.choice([1, 1])  # Random direction along the y-axis
 
+
     def update(self):
         # Move the sprite
         self.rect = self.image.get_rect(center=self.rect.center)
@@ -140,18 +138,13 @@ class Bluebench(pygame.sprite.Sprite):
         if self.rect.top < 0 or self.rect.bottom > tile_size:
             self.dy = -self.dy
 
-    def rotate_90_degrees(self):
-        # Rotate the sprite by 90 degrees
-        self.rotate_90_degrees()
-        self.rect = self.image.get_rect(center=self.rect.center)
-
 
 # Create random sprites
 for _ in range(9):
     blue = Bluebench()
     all_sprites.add(blue)
 
-#monitors movement inputs
+#monitors movement inputs/ key events
 while redplayer_score < 5 and blueplayer_score < 5:
     for event in pygame.event.get():
         if event.type == pygame.QUIT:
@@ -187,11 +180,8 @@ while redplayer_score < 5 and blueplayer_score < 5:
     ball.y += ball_speed_y
     blueplayer.y += blueplayer_speed
     redplayer.y += redplayer_speed
-    if blueplayer_score >= 5:
-        screen.fill(lightblue)  # Change the background color for blue wins
-        background_sound.stop()
-        blue_wins = True
 
+#bounds
     if blueplayer.top <= tile_size:
         blueplayer.top = tile_size
     if blueplayer.bottom >= 8 * tile_size:
@@ -213,10 +203,11 @@ while redplayer_score < 5 and blueplayer_score < 5:
         score_time = pygame.time.get_ticks()
         ball_restart()
 
+#collision
     if ball.colliderect(blueplayer) or ball.colliderect(redplayer):
         ball_speed_x *= -2
 
-
+#draw paddles and sprites
     screen.blit(background, (0, 0))
     pygame.draw.ellipse(screen, gray, ball)
     screen.blit(ball_image, ball)
@@ -232,11 +223,12 @@ while redplayer_score < 5 and blueplayer_score < 5:
     blueplayer_text = game_font.render(f"{blueplayer_score}", False, lightblue)
     screen.blit(blueplayer_text, (8 * tile_size + 32, tile_size))
 
+# winners screen
     if blueplayer_score >= 5:
         screen.fill(lightblue)  # Change the background color for blue wins
         background_sound.stop()
         blue_text = game_font.render("Blue team wins!", False, gray)
-        screen.blit(blue_text, (screen_width / 2 - 150, screen_height / 2))
+        screen.blit(blue_text, (screen_width / 2 - 200, screen_height / 2))
         blue_sound.play(-1)
         blue_wins = True
 
@@ -257,4 +249,4 @@ while True:
             blue_sound.stop()
             pygame.quit()
             sys.exit()
-background_sound.stop()
+            background_sound.stop()
